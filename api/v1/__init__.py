@@ -7,6 +7,7 @@ from .firmware import router as firmware_router
 from .plant_health import router as plant_health_router
 from .charts import router as charts_router
 from .system import router as system_router
+from .saveImg import router as saveImg_router
 
 __all__ = [
     "auth_router",
@@ -16,4 +17,5 @@ __all__ = [
     "plant_health_router",
     "charts_router",
     "system_router",
+    "saveImg_router",
 ]

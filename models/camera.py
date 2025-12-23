@@ -6,6 +6,8 @@ class Camera(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     rtsp_url: str | None = None
+    stream_url: str | None = None
+    agent_id: int | None = None
     zone: str | None = None
     is_active: bool = True
     last_snapshot: datetime | None = None

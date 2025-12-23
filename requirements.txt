@@ -10,3 +10,7 @@ redis
 python-multipart
 asyncpg
 psycopg2
+
+Pillow
+
+httpx

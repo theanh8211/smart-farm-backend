@@ -5,6 +5,7 @@ class CameraCreate(BaseModel):
     name: Optional[str] = "Camera mới"
     rtsp_url: str
     agent_id: Optional[int] = None
+    stream_url: Optional[str] = None
 
 
 class CameraResponse(BaseModel):

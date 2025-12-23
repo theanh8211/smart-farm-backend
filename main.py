@@ -3,9 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from core import events, config, logging
 from fastapi.staticfiles import StaticFiles
+import mimetypes
 
 # Import router
-from api.v1 import auth, device_auth, agents, firmware, plant_health, charts, system
+from api.v1 import auth, device_auth, agents, firmware, plant_health, charts, system, saveImg
 from api.v1.cameras import router as cameras_router
 import os
 
@@ -19,7 +20,9 @@ app = FastAPI(
     title="Smart Farm Web v1.0",
     version="1.0.0",
     lifespan=lifespan,
-    redirect_slashes=False
+    # Allow redirecting paths with/without trailing slash so frontend
+    # requests like /api/v1/plant-health (no trailing slash) will work.
+    redirect_slashes=True
 )
 
 # CORS
@@ -33,6 +36,8 @@ app.add_middleware(
 
 # Mount HLS directory
 os.makedirs("hls", exist_ok=True)
+# Ensure .ts files are served with correct MIME type for HLS segments
+mimetypes.add_type('video/mp2t', '.ts')
 app.mount("/hls", StaticFiles(directory="hls"), name="hls")
 
 # Routers
@@ -44,6 +49,8 @@ app.include_router(cameras_router, prefix="/api/v1/cameras", tags=["cameras"])
 app.include_router(plant_health.router, prefix="/api/v1/plant-health", tags=["plant-health"])
 app.include_router(charts.router, prefix="/api/v1/charts", tags=["charts"])
 app.include_router(system.router, prefix="/api/v1/system", tags=["system"])
+app.include_router(saveImg.router, prefix="/api/v1/saveImg", tags=["saveImg"])
+
 
 @app.get("/")
 async def root():

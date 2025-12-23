@@ -6,6 +6,8 @@ from models.plant_health import PlantHealth
 
 router = APIRouter()
 
+# Accept both '/api/v1/plant-health' and '/api/v1/plant-health/'
+@router.get("")
 @router.get("/")
 async def get_plant_status(limit: int = 100, status: str = None, db=Depends(get_db)):
     stmt = select(PlantHealth).order_by(PlantHealth.captured_at.desc()).limit(limit)

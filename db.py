@@ -4,7 +4,7 @@ import os
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "sqlite:///./smartfarm.db"   # mặc định cho dev
+    "sqlite:///./smartfarm.db"
 )
 
 engine = create_engine(
